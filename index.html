@@ -293,8 +293,7 @@ function renderCheck() {
     ${log.length ? `<div class="log">${log.map(l => `<div>✓ ${l}</div>`).join("")}</div>` : ""}
     <button class="btn" data-go="reel">See a family's reel</button></div>`;
   const c = q[0];
-  return head + `<p class="hint">Swipe → correct · ← wrong kid · ↓ not our club</p>
-  <div class="panel card swipe" id="swipe" data-id="${c.id}">
+  return head + `<div class="panel card swipe" id="swipe" data-id="${c.id}">
     <span class="stamp ok">Correct</span><span class="stamp no">Wrong kid</span>
     <div class="row" style="justify-content:space-between"><span class="label">Clip 1 of ${q.length}</span>
       ${c.status === "reported" ? `<span class="chip held">Reported by a parent</span>` : `<span class="chip held">Held</span>`}</div>
