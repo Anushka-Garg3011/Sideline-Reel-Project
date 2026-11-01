@@ -1,7 +1,7 @@
 # Roster-Tagging Accuracy: Product Spec
 
 **Product:** SidelineReel (Ajaia) · **Author:** Anushka Garg, PM · **Status:** Draft for engineering review · **Priority:** P1
-**Prototype:** https://6ae76296b4412e9346da4632--sideline-reel-prototype.netlify.app/ · **Walkthrough video:** [link]
+**Prototype:** https://sideline-reel-prototype.netlify.app/ · **Walkthrough video:** [link]
 
 ## 1. Problem
 SidelineReel matches a jersey number in the footage to a name on the roster (roster tagging). When two kids on the same roster wear numbers that look alike (4 and 14, 1 and 11, 12 and 21), the tagger sometimes puts one kid's highlight in the other kid's reel. A parent at Ridgeline wrote: *"My daughter wears number 14. Her highlight reel this week had a clip of a completely different kid wearing number 4. She was so disappointed."*
