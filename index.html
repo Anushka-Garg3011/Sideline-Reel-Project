@@ -344,22 +344,13 @@ function renderClips() {
     ${chip(c)}</div>`).join("")}</div>`;
 }
 
-/* ---------- Coach: roster and look-alike numbers ---------- */
+/* ---------- Coach: roster (look-alike checks run in the background, not shown here) ---------- */
 function renderTeam() {
-  const p = pairs();
-  return `<div class="stack"><h2>Roster</h2><p class="sub">Look-alike numbers are found automatically when the roster changes.</p></div>
-  <div class="stack"><span class="label">Look-alike numbers on this roster</span>
-    <div class="pairs">${p.length ? p.map(([a, b]) => `<span class="pair">${a} · ${b}</span>`).join("") : `<span class="sub">None</span>`}</div></div>
-  <div class="panel rules">
-    <span>Publish automatically when the camera is at least <b>80%</b> sure.</span>
-    <span>Numbers with a look-alike on the roster need <b>95%</b>.</span>
-    <span>Everything else waits for the coach. Unchecked clips expire after <b>7 days</b> and are never published.</span>
-  </div>
-  <div class="panel">${DATA.roster.slice().sort((a, b) => a.no - b.no).map(k => {
-    const la = lookFor(k.no);
-    return `<div class="kid" style="cursor:default"><span class="jersey">${k.no}</span>
-      <span><span class="name">${k.name}</span><br><span class="meta">${la.length ? `Looks like #${la.join(", #")}` : "No look-alikes"}</span></span>
-      <span class="count">${inReel(k.no).length} clips</span></div>`; }).join("")}</div>
+  return `<div class="stack"><h2>Roster</h2><p class="sub">${DATA.roster.length} players</p></div>
+  <div class="panel">${DATA.roster.slice().sort((a, b) => a.no - b.no).map(k =>
+    `<div class="kid" style="cursor:default"><span class="jersey">${k.no}</span>
+      <span class="name">${k.name}</span>
+      <span class="count">${inReel(k.no).length} clips</span></div>`).join("")}</div>
   <form class="stack" id="addForm"><span class="label">Add a player</span>
     <div class="addrow"><input id="addNo" type="number" min="0" max="99" placeholder="No." required>
       <input id="addName" type="text" placeholder="Name" required><button class="btn" type="submit">Add</button></div></form>`;
@@ -417,8 +408,7 @@ document.addEventListener("submit", e => {
   if (!(no >= 0 && no <= 99) || !name) return toast("Enter a number from 0 to 99 and a name.");
   if (kid(no)) return toast(`#${no} is already on the roster.`);
   DATA.roster.push({ no, name }); classify();
-  const la = lookFor(no);
-  toast(la.length ? `#${no} added. Looks like #${la.join(", #")}, so those clips now need 95%.` : `#${no} added. No look-alikes.`);
+  toast(`#${no} ${name} added to the roster.`);
   go("team");
 });
 
