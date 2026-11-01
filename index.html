@@ -291,7 +291,7 @@ function renderReel() {
   ${cl.length ? `<div class="player"><div class="lines"></div><div class="dot" id="dot" style="left:50%;top:50%">${k.no}</div>
     <div class="cap"><span><b id="capType">Ready</b><br><span id="capTime">${cl.length} clips</span></span><span id="capIdx"></span></div></div>
   <div class="bar"><i id="prog"></i></div>
-  <div class="row"><button class="btn" id="play">Play reel</button></div>` : `<div class="slot">No clips for ${k.name} yet. Clips the coach confirms show up here.</div>`}
+  <div class="row"><button class="btn" id="play">Play reel</button><button class="btn ghost" id="share">Share reel</button></div>` :`<div class="slot">No clips for ${k.name} yet. Clips the coach confirms show up here.</div>`}
   <div class="panel">${cl.map(c => `<div class="reelclip">
       <span class="ts">${c.t}<small>Half ${c.half}</small></span>
       <span><b>${c.type}</b><br><span class="sub">${c.status === "confirmed" ? "Checked by coach" : "Auto-tagged"}</span></span>
@@ -403,6 +403,12 @@ document.addEventListener("click", e => {
     pendingHide = null; toast(`Hidden. ${DATA.coach} will check it.`); go("reel");
   }
   else if (b.id === "play") playReel();
+  else if (b.id === "share") {
+    const link = `sidelinereel.app/r/${DATA.team.split(" ")[0].toLowerCase()}-${viewer}`;
+    const n = inReel(viewer).length;
+    const msg = `Link copied: ${kid(viewer).name}'s reel, ${n} checked clip${n === 1 ? "" : "s"} (sample link)`;
+    try { navigator.clipboard.writeText(link).then(() => toast(msg), () => toast(link)); } catch (err) { toast(link); }
+  }
 });
 document.addEventListener("change", e => { if (e.target.id === "viewer") { viewer = +e.target.value; pendingHide = null; go("reel"); } });
 document.addEventListener("submit", e => {
