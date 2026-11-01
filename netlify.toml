@@ -1,0 +1,10 @@
+# Static site: no build step. Netlify serves this folder as-is.
+[build]
+  publish = "."
+  command = ""
+
+# Prototype only: keep it out of search engines.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
