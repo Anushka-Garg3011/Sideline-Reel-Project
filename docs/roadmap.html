@@ -1,0 +1,654 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SidelineReel Roadmap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a fixed 1280x720 stage scaled to the window; one slide visible at a time, with a touchline footer. */
+:root{
+  --pitch:#0E3626;
+  --pitch-deep:#0A2A1D;
+  --chalk:#F4F2EA;
+  --chalk-2:rgba(244,242,234,.74);
+  --chalk-3:rgba(244,242,234,.17);
+  --flag:#F2B544;
+  --font-d:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;
+  --font-b:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%}
+body{
+  height:100%;margin:0;overflow:hidden;
+  background:var(--pitch-deep);color:var(--chalk);font-family:var(--font-b);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+#vp{position:relative;width:100%;height:100%;overflow:hidden}
+#stage{
+  position:absolute;left:50%;top:50%;width:1280px;height:720px;
+  transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center;
+  background:
+    repeating-linear-gradient(90deg,rgba(244,242,234,.022) 0 80px,transparent 80px 160px),
+    var(--pitch);
+  border:1px solid var(--chalk-3);overflow:hidden;
+}
+.slide{position:absolute;inset:0;padding:60px 80px 90px;display:none;flex-direction:column;min-width:0}
+.slide.on{display:flex;animation:in .35s ease}
+@keyframes in{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--chalk-2);margin:0 0 14px}
+h1,h2,h3{font-family:var(--font-d);text-transform:uppercase;margin:0;text-wrap:balance}
+h2{font-weight:800;font-size:60px;line-height:1;letter-spacing:.005em;margin-bottom:28px;max-width:1040px}
+h3{font-weight:700;font-size:26px;letter-spacing:.03em;margin-bottom:10px}
+p{margin:0}
+.lede{font-size:24px;line-height:1.45;color:var(--chalk-2);max-width:860px}
+.dense h2{font-size:48px;margin-bottom:20px}
+.small{font-size:16px;color:var(--chalk-2);line-height:1.45}
+.flag{color:var(--flag)}
+b,strong{font-weight:600}
+
+.card{border:1px solid var(--chalk-3);border-radius:6px;padding:24px 26px;background:rgba(244,242,234,.035);min-width:0}
+.card.hot{border-color:var(--flag);background:rgba(242,181,68,.08)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;min-width:0}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;min-width:0}
+.cols4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;min-width:0}
+.num{font-family:var(--font-d);font-weight:800;font-size:104px;line-height:.9;letter-spacing:.01em}
+ul.tight{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-size:20px;line-height:1.4}
+ul.tight li{padding-left:20px;position:relative}
+ul.tight li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:1.5px;background:var(--chalk-2)}
+.dense ul.tight{font-size:18px;gap:8px}
+
+table{width:100%;border-collapse:collapse;font-size:20px;line-height:1.3}
+th{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-2);text-align:left;padding:0 14px 10px;border-bottom:1px solid var(--chalk-2)}
+td{padding:11px 14px;border-bottom:1px solid var(--chalk-3);vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.dense table{font-size:18px}
+.dense td{padding:9px 14px}
+tr.hl td{background:rgba(242,181,68,.12)}
+tr.hl td:first-child{box-shadow:inset 3px 0 0 var(--flag)}
+.bar{display:inline-block;height:10px;background:var(--chalk-2);vertical-align:middle;margin-left:10px;border-radius:1px}
+tr.hl .bar{background:var(--flag)}
+.tag{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--chalk-3);border-radius:3px;padding:3px 8px;color:var(--chalk-2)}
+
+.foot{position:absolute;left:80px;right:80px;bottom:30px;display:flex;justify-content:space-between;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--chalk-2);border-top:1px solid var(--chalk-3);padding-top:12px}
+#prog{position:absolute;left:0;bottom:0;height:3px;background:var(--flag);transition:width .3s}
+
+/* title */
+.title-wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;flex:1}
+h1{font-weight:900;font-size:150px;line-height:.9;letter-spacing:.005em}
+.jerseys{display:grid;gap:18px;justify-items:start}
+.jersey{width:100%;border:1.5px solid var(--chalk-2);border-radius:6px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between}
+.jersey .num{font-size:88px}
+.jersey.b{border-color:var(--flag);color:var(--flag)}
+.jersey span{font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-2)}
+.jersey.b span{color:var(--flag)}
+
+/* decision */
+.big-name{font-family:var(--font-d);font-weight:800;font-size:58px;line-height:1;text-transform:uppercase;margin:8px 0 14px}
+.strike{text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:var(--chalk-2)}
+
+/* grid of 100 reels */
+#reels{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;width:400px}
+#reels i{display:block;aspect-ratio:1;border-radius:2px;background:var(--chalk)}
+#reels i.o{background:transparent;border:1.5px solid var(--chalk)}
+#reels i.u{background:transparent;border:1.5px dashed var(--flag)}
+.legend{display:grid;gap:8px;margin-top:16px;font-size:15px;color:var(--chalk-2)}
+.legend span{display:flex;align-items:center;gap:10px}
+.sw{width:14px;height:14px;border-radius:2px;display:inline-block;flex:none}
+
+/* flow */
+.flow{display:flex;align-items:stretch;gap:14px;margin-bottom:22px}
+.flow .arr{align-self:center;font-size:26px;color:var(--chalk-2)}
+.node{border:1px solid var(--chalk-3);border-radius:6px;padding:14px 18px;font-size:18px;line-height:1.35;background:rgba(244,242,234,.035);flex:1;min-width:0}
+.node small{display:block;font-size:15px;color:var(--chalk-2);margin-top:4px}
+.node.ok{border-color:var(--chalk-2)}
+.node.hold{border-color:var(--flag);background:rgba(242,181,68,.1)}
+.outs{display:grid;gap:10px;flex:1.4;min-width:0}
+
+/* rollout */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:22px}
+.step{padding:0 22px 0 0;position:relative}
+.step .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--chalk);background:var(--pitch);position:relative;z-index:1}
+.step .ln{position:absolute;left:14px;right:0;top:6px;height:1.5px;background:var(--chalk-3)}
+.step:last-child .ln{display:none}
+.step h3{margin-top:16px}
+.step p{font-size:18px;line-height:1.4;color:var(--chalk-2)}
+
+/* phone */
+.proto{display:grid;grid-template-columns:310px 1fr;gap:56px;align-items:center;flex:1}
+.phone{width:290px;height:480px;border:2px solid var(--chalk-2);border-radius:30px;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--pitch-deep);position:relative}
+.phone .q{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-2)}
+.frame{flex:1;border-radius:8px;border:1px solid var(--chalk-3);background:
+  repeating-linear-gradient(90deg,rgba(244,242,234,.05) 0 28px,transparent 28px 56px),var(--pitch);
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:96px;position:relative}
+.frame em{position:absolute;left:10px;top:10px;font-style:normal;font-family:var(--font-b);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--flag);color:var(--flag);padding:3px 7px;border-radius:3px;font-weight:600}
+.tagged{font-size:17px;font-weight:600}
+.btns{display:flex;justify-content:space-between;padding:2px 10px}
+.btn{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--chalk-2);display:flex;align-items:center;justify-content:center;font-size:22px}
+.swipes{display:grid;gap:14px;margin-top:6px}
+.sw-row{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:baseline;font-size:19px;line-height:1.4;padding-bottom:12px;border-bottom:1px solid var(--chalk-3)}
+.sw-row b{font-family:var(--font-d);font-size:24px;letter-spacing:.04em;text-transform:uppercase;font-weight:700}
+a{color:var(--chalk);text-decoration-color:var(--flag);text-underline-offset:4px;text-decoration-thickness:2px;overflow-wrap:anywhere}
+
+#nav{position:absolute;right:16px;bottom:16px;display:flex;gap:8px;z-index:5;opacity:0;transition:opacity .25s}
+#vp.show #nav{opacity:1}
+#nav button{font:600 14px var(--font-b);color:var(--chalk);background:rgba(10,42,29,.9);border:1px solid var(--chalk-2);border-radius:4px;padding:8px 14px;cursor:pointer}
+#nav button:focus-visible,a:focus-visible{outline:2px solid var(--flag);outline-offset:2px}
+</style>
+
+<div id="vp">
+<div id="stage">
+
+<!-- 1 Title -->
+<section class="slide">
+  <p class="eyebrow">Product Manager exercise · Ajaia</p>
+  <div class="title-wrap">
+    <div>
+      <h1>Sideline<br>Reel</h1>
+      <p class="lede" style="margin-top:26px">What we build next, the spec for it, and a working prototype.</p>
+      <p class="small" style="margin-top:22px">Anushka Garg · 1 November 2026</p>
+    </div>
+    <div class="jerseys">
+      <div class="jersey"><div class="num">14</div><span>Her reel</span></div>
+      <div class="jersey b"><div class="num">4</div><span>The clip in it</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 Decision -->
+<section class="slide">
+  <p class="eyebrow">The decision</p>
+  <h2>Make sure the right kid is in every reel</h2>
+  <div class="cols" style="flex:1">
+    <div class="card hot">
+      <p class="eyebrow flag">Build first · P1</p>
+      <div class="big-name">Roster-tagging accuracy</div>
+      <p class="lede" style="font-size:22px">Stop wrong-kid highlights when jersey numbers look alike: 14 and 4, 1 and 11, swapped digits.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Not building</p>
+      <div class="big-name strike">Livestreaming</div>
+      <p class="lede" style="font-size:22px">Off the core job, the largest effort on the list, and it rests on one account's request.</p>
+    </div>
+  </div>
+  <div class="cols" style="margin-top:18px">
+    <p class="small"><b>Ships alongside:</b> a cheap A/B test that moves reel notifications out of late-night hours.</p>
+    <p class="small"><b>Investigate next:</b> a view-only share link, and why parents abandon the Reel Editor.</p>
+  </div>
+</section>
+
+<!-- 3 Survey vs usage -->
+<section class="slide">
+  <p class="eyebrow">The signals</p>
+  <h2>What parents say is not what parents do</h2>
+  <div class="cols" style="flex:1">
+    <div class="card">
+      <p class="eyebrow">What they say · survey, 210 parents, 40 clubs</p>
+      <div class="num">58%</div>
+      <p class="lede" style="font-size:22px;margin-top:12px">name more editing controls as their single biggest ask.</p>
+    </div>
+    <div class="card hot">
+      <p class="eyebrow">What they do · last 90 days, all accounts</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+        <div><div class="num" style="font-size:72px">6%</div><p class="small" style="margin-top:8px">of parents opened the Reel Editor</p></div>
+        <div><div class="num" style="font-size:72px">&lt;1%</div><p class="small" style="margin-top:8px">of those finished an edit</p></div>
+        <div><div class="num" style="font-size:72px">90%</div><p class="small" style="margin-top:8px">of auto-recaps get shared</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="lede" style="font-size:21px;margin-top:20px;max-width:1000px">I trust behavior on what people do and the survey on what they wish for. Parents want the automatic reel to be right, not tools to fix it.</p>
+</section>
+
+<!-- 4 Share rate -->
+<section class="slide">
+  <p class="eyebrow">The signals</p>
+  <h2>The 92% share rate hides the problem</h2>
+  <div style="display:grid;grid-template-columns:430px 1fr;gap:56px;flex:1;align-items:start">
+    <div>
+      <div id="reels" aria-label="100 generated reels: 64 shared, 6 opened but not shared, 30 never opened"></div>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--chalk)"></i>About 64 of 100 reels shared</span>
+        <span><i class="sw" style="border:1.5px solid var(--chalk)"></i>About 6 opened, not shared</span>
+        <span><i class="sw" style="border:1.5px dashed var(--flag)"></i>About 30 never opened</span>
+      </div>
+    </div>
+    <div style="display:grid;gap:18px">
+      <p class="lede" style="font-size:22px">The dashboard counts only reels a parent opened. About 30% of generated reels are never opened at all.</p>
+      <div class="card">
+        <p class="eyebrow">Across all reels</p>
+        <p style="font-family:var(--font-d);font-weight:800;font-size:56px;line-height:1">92% × 70% ≈ <span class="flag">64%</span></p>
+        <p class="small" style="margin-top:8px">Assumes unopened reels are not shared.</p>
+      </div>
+      <p class="lede" style="font-size:20px">Analytics links wrong-kid thumbnails to the unopened reels. Replace the metric with <b style="color:var(--chalk)">reel open rate</b> and <b style="color:var(--chalk)">wrong-kid report rate</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 Tickets -->
+<section class="slide">
+  <p class="eyebrow">The signals</p>
+  <h2>Three clubs, three sports, one failure</h2>
+  <div class="cols3" style="flex:1">
+    <div class="card hot">
+      <p class="eyebrow">Ridgeline Youth Soccer · parent</p>
+      <div class="num" style="font-size:88px">14 → 4</div>
+      <p class="small" style="margin-top:14px;font-size:17px">“Her highlight reel this week had a clip of a completely different kid wearing number 4. She was so disappointed.”</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Brightwater Youth Lacrosse · coach</p>
+      <div class="num" style="font-size:46px;line-height:.95;padding:6px 0 4px">Swapped<br>digits</div>
+      <p class="small" style="margin-top:14px;font-size:17px">Twice this season a highlight was clearly a different kid. Both times the numbers were swapped digits.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Cobblestone Little League · parent</p>
+      <div class="num" style="font-size:88px">1 → 11</div>
+      <p class="small" style="margin-top:14px;font-size:17px">“My son is number 1 and the clip in his reel was number 11.”</p>
+    </div>
+  </div>
+  <p class="lede" style="font-size:21px;margin-top:20px;max-width:1040px">Independent reports with the same pattern, and tickets under-report. Ridgeline is our biggest account, and its own parent filed the 14 and 4 ticket.</p>
+</section>
+
+<!-- 6 RICE -->
+<section class="slide dense">
+  <p class="eyebrow">The roadmap</p>
+  <h2>RICE scores for every candidate</h2>
+  <table>
+    <thead><tr><th>Candidate</th><th class="n">Reach</th><th class="n">Impact</th><th class="n">Conf.</th><th class="n">Effort</th><th>RICE</th><th>Core gate</th></tr></thead>
+    <tbody>
+      <tr><td>Notification timing (stop late-night sends)</td><td class="n">40</td><td class="n">0.5</td><td class="n">50%</td><td class="n">0.25</td><td><b>40</b><span class="bar" style="width:120px"></span></td><td>Core</td></tr>
+      <tr class="hl"><td><b>Roster-tagging accuracy</b></td><td class="n">30</td><td class="n">3</td><td class="n">70%</td><td class="n">2</td><td><b>31.5</b><span class="bar" style="width:95px"></span></td><td>Core</td></tr>
+      <tr><td>View-only share link</td><td class="n">25</td><td class="n">1</td><td class="n">50%</td><td class="n">1.5</td><td><b>8.3</b><span class="bar" style="width:25px"></span></td><td>Adjacent</td></tr>
+      <tr><td>Watermark missing on camera-roll save</td><td class="n">5</td><td class="n">0.5</td><td class="n">50%</td><td class="n">0.25</td><td><b>5.0</b><span class="bar" style="width:15px"></span></td><td>Core, minor</td></tr>
+      <tr><td>App icon for all-sports leagues</td><td class="n">3</td><td class="n">0.25</td><td class="n">80%</td><td class="n">0.25</td><td><b>2.4</b><span class="bar" style="width:7px"></span></td><td>Off-core</td></tr>
+      <tr><td>Livestreaming</td><td class="n">15</td><td class="n">2</td><td class="n">30%</td><td class="n">12</td><td><b>0.75</b><span class="bar" style="width:3px"></span></td><td>Off-core</td></tr>
+      <tr><td>Reel Editor improvements</td><td class="n">10</td><td class="n">1</td><td class="n">20%</td><td class="n">3</td><td><b>0.67</b><span class="bar" style="width:2px"></span></td><td>Core, weak evidence</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:16px">RICE = Reach × Impact × Confidence ÷ Effort. The materials gave no reach or effort figures, so Reach (% of active families per quarter) and Effort (person-months) are my estimates, to be replaced with real numbers.</p>
+</section>
+
+<!-- 7 Overrides -->
+<section class="slide">
+  <p class="eyebrow">The roadmap</p>
+  <h2>Why tagging goes first when it scores second</h2>
+  <div class="cols3" style="flex:1">
+    <div class="card hot">
+      <h3>Trust and safety</h3>
+      <p class="lede" style="font-size:20px">A child shown in another kid's reel is a kids'-footage issue. It goes to the top regardless of score.</p>
+    </div>
+    <div class="card">
+      <h3>Fix before add</h3>
+      <p class="lede" style="font-size:20px">A broken core flow beats every new feature. Tagging is the root cause behind the tickets and the thumbnails.</p>
+    </div>
+    <div class="card">
+      <h3>Revenue overlay</h3>
+      <p class="lede" style="font-size:20px">Ridgeline's $180k renewal is real, but it overlays the score instead of replacing it. Fixing tagging addresses what its own parent reported.</p>
+    </div>
+  </div>
+  <p class="lede" style="font-size:21px;margin-top:20px;max-width:1040px">Notification timing scores higher, but “most unopened reels” is a hypothesis, not a measurement. It ships alongside as an A/B test.</p>
+</section>
+
+<!-- 8 Roadmap -->
+<section class="slide dense">
+  <p class="eyebrow">The roadmap</p>
+  <h2>Build, investigate, backlog, decline</h2>
+  <div class="cols4" style="flex:1">
+    <div class="card hot">
+      <p class="eyebrow flag">Build now</p>
+      <ul class="tight">
+        <li><b>Roster-tagging accuracy.</b> The P1.</li>
+        <li><b>Notification timing.</b> Shipped as an A/B test, not a project.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Investigate</p>
+      <ul class="tight">
+        <li><b>View-only share link.</b> Validate demand with Ridgeline first.</li>
+        <li><b>Reel Editor.</b> Five parent interviews and a funnel check. No new controls yet.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Backlog</p>
+      <ul class="tight">
+        <li><b>Watermark bug.</b> One coach, “not urgent”.</li>
+        <li><b>App icon.</b> One anecdote, a design-team call.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Not building</p>
+      <ul class="tight">
+        <li><b>Livestreaming.</b></li>
+        <li><b>More editor controls,</b> until we know why parents abandon the editor.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 9 Livestreaming and Carla -->
+<section class="slide dense">
+  <p class="eyebrow">Not building</p>
+  <h2>Livestreaming, and what Ridgeline hears</h2>
+  <div class="cols" style="flex:1">
+    <div class="card">
+      <h3>Why not livestreaming</h3>
+      <ul class="tight">
+        <li>Outside the core job: footage, each kid's highlights, personal reel, weekly recap.</li>
+        <li>At least 12 person-months by my estimate, the largest on the list.</li>
+        <li>Its audience, grandparents and scouts, is not a current user.</li>
+        <li>It means live video of minors going to people outside the roster.</li>
+        <li>It delays the wrong-kid fix, which is what damages trust today.</li>
+      </ul>
+    </div>
+    <div class="card hot">
+      <h3>What Jamal and I tell Carla</h3>
+      <ul class="tight">
+        <li><b>The tagging fix,</b> including the exact issue her own parent reported.</li>
+        <li><b>A view-only share link,</b> so grandparents and scouts can watch without being on the roster.</li>
+        <li><b>Livestreaming</b> as something we are exploring with a partner, not a commitment.</li>
+        <li><b>No dates</b> until engineering has estimated the work.</li>
+      </ul>
+      <p class="small" style="margin-top:14px">$180k a season · signups open in about six weeks</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 Spec outcome -->
+<section class="slide dense">
+  <p class="eyebrow">Spec · Roster-tagging accuracy</p>
+  <h2>The right kid in every reel, with little extra work for coaches</h2>
+  <div class="card hot" style="margin-bottom:16px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center">
+    <div>
+      <p class="eyebrow flag">Primary metric · wrong-kid report rate</p>
+      <p class="lede" style="font-size:20px">“Not my kid” reports per 1,000 published clips, weekly.</p>
+    </div>
+    <div>
+      <p style="font-family:var(--font-d);font-weight:800;font-size:54px;line-height:1">−70%</p>
+      <p class="small">vs the shadow-week baseline in pilot clubs (estimate)</p>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="card">
+      <p class="eyebrow">Secondary</p>
+      <p style="font-size:19px;line-height:1.4"><b>Reel open rate:</b> reels opened ÷ reels generated. About 70% today, target +5 points in pilot clubs (estimate).</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Guardrails</p>
+      <ul class="tight">
+        <li>Coach load: at most 5 held clips per game</li>
+        <li>Held clips expiring unreviewed: 10% or less</li>
+        <li>Weekly recap sent on time: no change</li>
+        <li>Kids with look-alike numbers keep equal coverage</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11 How it works -->
+<section class="slide dense">
+  <p class="eyebrow">Spec · Scope</p>
+  <h2>Hold uncertain look-alike clips for the coach</h2>
+  <div class="flow">
+    <div class="node">Clip is tagged<small>Jersey number matched to the roster</small></div>
+    <span class="arr">→</span>
+    <div class="node">Confidence bar<small>80% or higher normally. 95% or higher when a look-alike number is on the roster.</small></div>
+    <span class="arr">→</span>
+    <div class="outs">
+      <div class="node ok">Meets the bar: publishes to that kid's reel</div>
+      <div class="node hold">Below the bar: held. Kept out of reels, the recap and thumbnails.</div>
+    </div>
+  </div>
+  <div class="cols" style="flex:1">
+    <div>
+      <p class="eyebrow">In scope · v1</p>
+      <ul class="tight">
+        <li>Look-alike detection when a roster changes: one added digit (1/11, 4/14) or swapped digits (12/21)</li>
+        <li>Coach check on mobile: swipe cards, one clip at a time</li>
+        <li>Parent “Not my kid” button on every clip</li>
+        <li>Recap sends on time with confirmed clips only</li>
+        <li>Instrumentation for every metric</li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow">Out of scope</p>
+      <ul class="tight">
+        <li>Face recognition or any biometric ID of children</li>
+        <li>Retraining or replacing the vision model</li>
+        <li>Better own-team vs opponent detection</li>
+        <li>More look-alike rules, such as 6/8 and 3/8</li>
+        <li>Notification timing, share link, editor changes, livestreaming</li>
+      </ul>
+    </div>
+  </div>
+  <p class="small" style="margin-top:10px">Thresholds are estimates, tuned during the shadow week.</p>
+</section>
+
+<!-- 12 Human in the loop -->
+<section class="slide">
+  <p class="eyebrow">Spec · Human in the loop</p>
+  <h2>A person decides whenever the system is unsure</h2>
+  <div class="cols" style="flex:1;grid-template-rows:1fr 1fr">
+    <div class="card hot">
+      <h3>The coach decides identity</h3>
+      <p class="lede" style="font-size:19px">The system never chooses between two look-alike kids on its own.</p>
+    </div>
+    <div class="card">
+      <h3>Parent reports are never auto-reassigned</h3>
+      <p class="lede" style="font-size:19px">“Not my kid” hides the clip and sends it to the coach. A second wrong guess would put a child's footage in front of a third family.</p>
+    </div>
+    <div class="card">
+      <h3>Unreviewed clips fail safe</h3>
+      <p class="lede" style="font-size:19px">A held clip expires after 7 days and is never published. A missed highlight beats a wrong one.</p>
+    </div>
+    <div class="card">
+      <h3>People set the thresholds</h3>
+      <p class="lede" style="font-size:19px">The PM and the ML lead adjust the 80% and 95% bars weekly from audit data. They never change automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 AC hold rule -->
+<section class="slide">
+  <p class="eyebrow">Spec · Acceptance criteria</p>
+  <h2>What gets held and what gets published</h2>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th>Given</th><th>When</th><th>Then</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>AC1</td><td>Roster has #4 and #14</td><td>A clip is tagged #4 at 91%</td><td>Held. Not in #4's reel. Appears as a coach card “Tagged as #4”.</td></tr>
+      <tr><td>AC2</td><td>#4 has no look-alike on the roster</td><td>A clip is tagged #4 at 91%</td><td>Publishes to #4's reel.</td></tr>
+      <tr><td>AC3</td><td>Any roster</td><td>A clip is tagged under 80%</td><td>Held, whatever the number.</td></tr>
+      <tr><td>AC4</td><td>Roster has #12 and #21</td><td>The roster is saved</td><td>12/21 is flagged as a look-alike pair. Adding #11 when #1 exists flags 1/11.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 14 AC coach and parent -->
+<section class="slide dense">
+  <p class="eyebrow">Spec · Acceptance criteria</p>
+  <h2>What the coach, the recap and the parent can do</h2>
+  <table>
+    <thead><tr><th style="width:70px">ID</th><th>Given</th><th>When</th><th>Then</th></tr></thead>
+    <tbody>
+      <tr><td>AC5</td><td>Held clip tagged #4</td><td>Coach swipes right</td><td>In #4's reel within 1 minute, logged as coach-confirmed.</td></tr>
+      <tr><td>AC6</td><td>Held clip tagged #4</td><td>Coach swipes left, picks #14 Zoe K.</td><td>In #14's reel within 1 minute, not in #4's, logged as coach-corrected.</td></tr>
+      <tr><td>AC7</td><td>Held clip</td><td>Coach swipes down onto the bin</td><td>Removed from all reels and recaps for good.</td></tr>
+      <tr><td>AC8</td><td>2 clips still held at recap time</td><td>The recap sends</td><td>On time, with no held clip and no held-clip thumbnail.</td></tr>
+      <tr class="hl"><td>AC9</td><td>Published clip in #9's reel</td><td>#9's parent taps “Not my kid”</td><td>Leaves the reel within 5 seconds, returns to the coach, is not added to any other reel, and the report is counted.</td></tr>
+      <tr><td>AC10</td><td>Held clip</td><td>Nobody reviews it for 7 days</td><td>Expires, is never published, counted as expired unreviewed.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 15 Failure modes -->
+<section class="slide dense">
+  <p class="eyebrow">Spec · Risks</p>
+  <h2>Two ways this fails, and what catches each</h2>
+  <div class="cols" style="flex:1">
+    <div class="card">
+      <h3>1 · Coaches don't review held clips</h3>
+      <p class="small" style="margin-bottom:10px;font-size:16px"><b style="color:var(--chalk)">Looks like:</b> the list piles up and clips expire. Kids with look-alike numbers quietly get fewer highlights than teammates.</p>
+      <p class="small" style="margin-bottom:10px;font-size:16px"><b style="color:var(--chalk)">Caught by:</b> expired-unreviewed rate per team; kid coverage split by look-alike vs other numbers; an alert when a team has clips unreviewed for over 48 hours.</p>
+      <p class="small" style="font-size:16px"><b style="color:var(--chalk)">Response:</b> a reminder at a sensible hour; let an assistant coach or team manager review; lower the hold rate if load passes 5 per game.</p>
+    </div>
+    <div class="card hot">
+      <h3>2 · The tagger is confidently wrong</h3>
+      <p class="small" style="margin-bottom:10px;font-size:16px"><b style="color:var(--chalk)">Looks like:</b> an arm hides the “1” in 14, so it reads as a clean, high-confidence 4. It slips past the 95% bar, or hits a pair we did not define, such as 6/8.</p>
+      <p class="small" style="margin-bottom:10px;font-size:16px"><b style="color:var(--chalk)">Caught by:</b> “Not my kid” reports per 1,000 clips by club and number pair; a weekly audit where a person checks 50 auto-published look-alike clips.</p>
+      <p class="small" style="font-size:16px"><b style="color:var(--chalk)">Response:</b> raise the look-alike threshold or add the pair rule; set a repeatedly failing pair to “always ask the coach”.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 Rollout -->
+<section class="slide dense">
+  <p class="eyebrow">Spec · Rollout</p>
+  <h2>Shadow week, pilot, then every club</h2>
+  <div class="steps">
+    <div class="step"><div class="dot"></div><div class="ln"></div><h3>Shadow week</h3><p>Rules run without holding anything. Measure how many clips would be held per game, and audit a sample to set the baseline wrong-kid rate.</p></div>
+    <div class="step"><div class="dot"></div><div class="ln"></div><h3>Pilot</h3><p>Ridgeline, Brightwater and Cobblestone, the three clubs that reported it, behind a flag.</p></div>
+    <div class="step"><div class="dot"></div><h3>All clubs</h3><p>After 2 clean pilot weeks: primary metric down, coach load at most 5 per game, expiries 10% or less.</p></div>
+  </div>
+  <div class="cols" style="flex:1">
+    <div class="card">
+      <p class="eyebrow">Rollback and dates</p>
+      <ul class="tight">
+        <li>Turn the flag off if recaps send late or expiries pass 25%.</li>
+        <li>Dates follow engineering sizing. Nothing goes to Ridgeline until then.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Open questions</p>
+      <ul class="tight">
+        <li>Does the tagger output a per-clip confidence today?</li>
+        <li>Who besides the head coach may review clips?</li>
+        <li>Can confirmed clips improve the model, given they are minors' footage?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 17 Prototype -->
+<section class="slide">
+  <p class="eyebrow">Prototype · Coach flow</p>
+  <h2>Flag, review, send</h2>
+  <div class="proto">
+    <div class="phone" aria-hidden="true">
+      <div class="q">3 clips need a check</div>
+      <div class="frame"><em>Held · look-alike</em>4</div>
+      <div class="tagged">Tagged as #4</div>
+      <div class="btns">
+        <div class="btn">✕</div>
+        <div class="btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></div>
+        <div class="btn">✓</div>
+      </div>
+    </div>
+    <div>
+      <div class="swipes">
+        <div class="sw-row"><b>Swipe right</b><span>The tag is correct. The clip goes into that kid's reel.</span></div>
+        <div class="sw-row"><b>Swipe left</b><span>Wrong kid. A “Who is this?” overlay lists similar numbers first.</span></div>
+        <div class="sw-row"><b>Swipe down</b><span>Not our club's kid. The clip is removed everywhere.</span></div>
+        <div class="sw-row" style="border-bottom:0"><b>Send</b><span>The recap goes out on time with checked clips only.</span></div>
+      </div>
+      <p class="small" style="margin-top:14px">Mock data only: invented players, clips and confidence scores.</p>
+      <p class="small" style="margin-top:6px"><a href="https://6ae76296b4412e9346da4632--sideline-reel-prototype.netlify.app/" target="_blank" rel="noopener">6ae76296b4412e9346da4632--sideline-reel-prototype.netlify.app</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 AI workflow -->
+<section class="slide">
+  <p class="eyebrow">AI workflow note</p>
+  <h2>Where AI helped, and where I decided</h2>
+  <div class="cols3" style="flex:1">
+    <div class="card">
+      <h3>Used AI for</h3>
+      <p class="lede" style="font-size:19px">Claude Code wrote the spec documentation, built the prototype from that spec, and deployed it to Netlify through GitHub.</p>
+    </div>
+    <div class="card hot">
+      <h3>Kept human</h3>
+      <p class="lede" style="font-size:19px">The RICE scoring, the ranking, the trust-and-safety override that made tagging P1, what we are not building, and what to tell Ridgeline.</p>
+    </div>
+    <div class="card">
+      <h3>What it got wrong</h3>
+      <p class="lede" style="font-size:19px">A first roadmap draft offered Ridgeline a “pilot in 4 weeks” before engineering had sized anything. I discarded it. No dates until engineering estimates.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 19 Close -->
+<section class="slide">
+  <p class="eyebrow">Summary</p>
+  <h2 style="font-size:92px;max-width:1100px">Right kid.<br>Every reel.</h2>
+  <div class="cols3" style="margin-top:10px">
+    <div class="card hot"><p class="eyebrow flag">Build</p><p class="lede" style="font-size:20px">Roster-tagging accuracy, with a coach check for uncertain look-alike clips.</p></div>
+    <div class="card"><p class="eyebrow">Test</p><p class="lede" style="font-size:20px">Late-night notifications. Then the share link and the editor drop-off.</p></div>
+    <div class="card"><p class="eyebrow">Decline</p><p class="lede" style="font-size:20px">Livestreaming, with an honest answer for Ridgeline and no dates until sized.</p></div>
+  </div>
+</section>
+
+<div class="foot"><span>SidelineReel · Roadmap, spec and prototype</span><span id="count"></span></div>
+<div id="prog"></div>
+</div>
+<div id="nav"><button id="prev" type="button" aria-label="Previous slide">Prev</button><button id="next" type="button" aria-label="Next slide">Next</button></div>
+</div>
+
+<script>
+(function(){
+  var vp=document.getElementById('vp'), stage=document.getElementById('stage');
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var count=document.getElementById('count'), prog=document.getElementById('prog');
+  var cur=0, hideT;
+
+  // 100-reel grid: 64 shared, 6 opened but not shared, 30 never opened
+  var g=document.getElementById('reels');
+  for(var i=0;i<100;i++){var el=document.createElement('i'); if(i>=64&&i<70)el.className='o'; if(i>=70)el.className='u'; g.appendChild(el);}
+
+  function fit(){
+    var s=Math.min(vp.clientWidth/1280, vp.clientHeight/720);
+    stage.style.setProperty('--s', s>0?s:1);
+  }
+  function show(i){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach(function(s,k){s.classList.toggle('on',k===cur)});
+    count.textContent=(cur+1)+' / '+slides.length;
+    prog.style.width=((cur+1)/slides.length*100)+'%';
+  }
+  function go(i){
+    show(i);
+    try{ history.replaceState(null,'','#slide-'+(cur+1)); }catch(e){}
+  }
+  function fromHash(){
+    var m=/^#slide-(\d+)$/.exec(location.hash||'');
+    show(m?parseInt(m[1],10)-1:0);
+  }
+  window.addEventListener('hashchange',fromHash);
+  window.addEventListener('resize',fit);
+  document.addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){e.preventDefault();go(cur+1)}
+    else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();go(cur-1)}
+    else if(k==='Home'){go(0)} else if(k==='End'){go(slides.length-1)}
+  });
+  document.getElementById('next').addEventListener('click',function(e){e.stopPropagation();go(cur+1)});
+  document.getElementById('prev').addEventListener('click',function(e){e.stopPropagation();go(cur-1)});
+  stage.addEventListener('click',function(e){
+    if(e.target.closest('a'))return;
+    var r=stage.getBoundingClientRect();
+    go((e.clientX-r.left)<r.width*0.25?cur-1:cur+1);
+  });
+  var tx=null;
+  stage.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  stage.addEventListener('touchend',function(e){
+    if(tx===null)return; var dx=e.changedTouches[0].clientX-tx; tx=null;
+    if(Math.abs(dx)>40)go(dx<0?cur+1:cur-1);
+  },{passive:true});
+  vp.addEventListener('mousemove',function(){vp.classList.add('show');clearTimeout(hideT);hideT=setTimeout(function(){vp.classList.remove('show')},2200)});
+
+  fit(); fromHash();
+})();
+</script>
+
+</body></html>
